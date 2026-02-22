@@ -8,12 +8,14 @@ export default function WebLurLanding() {
     businessType: '',
     projectDetails: ''
   });
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    setMenuOpen(false);
   };
 
   const handleSubmit = (e) => {
@@ -29,12 +31,14 @@ export default function WebLurLanding() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* NAV - added mobile hamburger menu */}
       <nav className="sticky top-0 z-50 bg-white flex items-center justify-between px-8 py-6 border-b-2 border-black">
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span className="text-2xl">⛶</span>
           <span className="text-xl font-bold">WEBLUR</span>
         </div>
-        
+
+        {/* Desktop nav - unchanged */}
         <div className="hidden md:flex items-center space-x-8">
           <button onClick={() => scrollToSection('tjanster')} className="text-gray-700 hover:text-black transition relative group">
             Tjänster
@@ -56,128 +60,153 @@ export default function WebLurLanding() {
             Kontakta Oss
           </button>
         </div>
+
+        {/* Mobile hamburger button */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`block w-6 h-0.5 bg-black transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+          <span className={`block w-6 h-0.5 bg-black transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`block w-6 h-0.5 bg-black transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+        </button>
       </nav>
 
-      <main className="max-w-6xl mx-auto px-8 py-32 md:py-40 lg:py-48 text-center min-h-screen flex flex-col justify-center">
-        <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight">
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div className="md:hidden fixed top-[73px] left-0 right-0 z-40 bg-white border-b-2 border-black flex flex-col items-start px-8 py-6 gap-5 shadow-lg">
+          <button onClick={() => scrollToSection('tjanster')} className="text-gray-700 hover:text-black text-lg w-full text-left">Tjänster</button>
+          <button onClick={() => scrollToSection('portfolio')} className="text-gray-700 hover:text-black text-lg w-full text-left">Portfolio</button>
+          <button onClick={() => scrollToSection('process')} className="text-gray-700 hover:text-black text-lg w-full text-left">Process</button>
+          <button onClick={() => scrollToSection('priser')} className="text-gray-700 hover:text-black text-lg w-full text-left">Priser</button>
+          <button onClick={() => scrollToSection('kontakt')} className="bg-black text-white px-6 py-2 rounded border-2 border-black w-full text-center text-lg">Kontakta Oss</button>
+        </div>
+      )}
+
+      {/* HERO - tightened mobile padding, smaller headline on mobile */}
+      <main className="max-w-6xl mx-auto px-6 sm:px-8 py-16 sm:py-24 md:py-32 lg:py-48 text-center min-h-screen flex flex-col justify-center">
+        <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-6 sm:mb-8 leading-tight">
           WEBBPLATSER<br />
           SOM<br />
           <span className="italic font-bold">FUNGERAR</span>
         </h1>
-        
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+
+        <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8 sm:mb-12">
           Professionella, lättanterliga webbplatser för restauranger och bokningstjänster. Kom online på veckor, inte månader.
         </p>
 
-        <div className="flex flex-row items-center justify-center gap-4 mb-16">
-          <button onClick={() => scrollToSection('kontakt')} className="bg-black text-white px-8 py-3 rounded hover:bg-white hover:text-black border-2 border-black transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 sm:mb-16">
+          <button onClick={() => scrollToSection('kontakt')} className="w-full sm:w-auto bg-black text-white px-8 py-3 rounded hover:bg-white hover:text-black border-2 border-black transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2">
             Boka Nu
             <span>→</span>
           </button>
-          <button onClick={() => scrollToSection('portfolio')} className="border-2 border-black text-black px-8 py-3 rounded hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-0.5">
+          <button onClick={() => scrollToSection('portfolio')} className="w-full sm:w-auto border-2 border-black text-black px-8 py-3 rounded hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-0.5">
             Se Våra Arbeten
           </button>
         </div>
 
-        <div className="border-t-2 border-black pt-12 mt-8 mx-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="border-t-2 border-black pt-10 sm:pt-12 mt-6 sm:mt-8 mx-0 sm:mx-8">
+          <div className="grid grid-cols-3 gap-4 sm:gap-12">
             <div>
-              <div className="text-4xl font-bold mb-2">10+</div>
-              <div className="text-gray-600">Lanserade Webbplatser</div>
+              <div className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">10+</div>
+              <div className="text-xs sm:text-base text-gray-600">Lanserade Webbplatser</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">100%</div>
-              <div className="text-gray-600">Nöjda Kunder</div>
+              <div className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">100%</div>
+              <div className="text-xs sm:text-base text-gray-600">Nöjda Kunder</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">1 Vecka</div>
-              <div className="text-gray-600">Genomsnittlig Leverans</div>
+              <div className="text-2xl sm:text-4xl font-bold mb-1 sm:mb-2">1 Vecka</div>
+              <div className="text-xs sm:text-base text-gray-600">Genomsnittlig Leverans</div>
             </div>
           </div>
         </div>
       </main>
 
-      <section id="tjanster" className="max-w-7xl mx-auto px-8 py-24 scroll-mt-20">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4">Våra Tjänster</h2>
-          <p className="text-lg text-gray-600">Specialiserade webblösningar för företag som behöver vara online</p>
+      {/* TJÄNSTER - mobile: 1 col, tablet: 2 col, desktop: 4 col - unchanged */}
+      <section id="tjanster" className="max-w-7xl mx-auto px-6 sm:px-8 py-16 sm:py-24 scroll-mt-20">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4">Våra Tjänster</h2>
+          <p className="text-base sm:text-lg text-gray-600">Specialiserade webblösningar för företag som behöver vara online</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="border-2 border-black p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
-            <div className="text-5xl mb-6 grayscale">🍴</div>
-            <h3 className="text-2xl font-bold mb-4">Restaurang-webbplatser</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="border-2 border-black p-6 sm:p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
+            <div className="text-4xl sm:text-5xl mb-4 sm:mb-6 grayscale">🍴</div>
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Restaurang-webbplatser</h3>
             <p className="text-gray-600 group-hover:text-white">Vackra, lätthanterliga webbplatser för pizzerior, kaféer och restauranger med onlinebeställning.</p>
           </div>
 
-          <div className="border-2 border-black p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
-            <div className="text-5xl mb-6 grayscale">📅</div>
-            <h3 className="text-2xl font-bold mb-4">Boknings-plattformar</h3>
+          <div className="border-2 border-black p-6 sm:p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
+            <div className="text-4xl sm:text-5xl mb-4 sm:mb-6 grayscale">📅</div>
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Boknings-plattformar</h3>
             <p className="text-gray-600 group-hover:text-white">Sömlösa bokningssystem för nagelstudios, hårsalonger och skönhetstjänster.</p>
           </div>
 
-          <div className="border-2 border-black p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
-            <div className="text-5xl mb-6 grayscale">🛒</div>
-            <h3 className="text-2xl font-bold mb-4">E-handelslösningar</h3>
+          <div className="border-2 border-black p-6 sm:p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
+            <div className="text-4xl sm:text-5xl mb-4 sm:mb-6 grayscale">🛒</div>
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">E-handelslösningar</h3>
             <p className="text-gray-600 group-hover:text-white">Kompletta webbutiker med betalningshantering, lagerhantering och kundspårning.</p>
           </div>
 
-          <div className="border-2 border-black p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
-            <div className="text-5xl mb-6 grayscale">⚡</div>
-            <h3 className="text-2xl font-bold mb-4">Anpassad Utveckling</h3>
+          <div className="border-2 border-black p-6 sm:p-8 hover:bg-black hover:text-white transition-all duration-300 group cursor-pointer">
+            <div className="text-4xl sm:text-5xl mb-4 sm:mb-6 grayscale">⚡</div>
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Anpassad Utveckling</h3>
             <p className="text-gray-600 group-hover:text-white">Skräddarsydda webblösningar utformade specifikt för dina affärsbehov och mål.</p>
           </div>
         </div>
       </section>
 
-      <section id="portfolio" className="bg-black text-white py-24 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4">Våra Arbeten</h2>
-            <p className="text-lg text-gray-400">Riktiga webbplatser vi har byggt för riktiga företag</p>
+      {/* PORTFOLIO */}
+      <section id="portfolio" className="bg-black text-white py-16 sm:py-24 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4">Våra Arbeten</h2>
+            <p className="text-base sm:text-lg text-gray-400">Riktiga webbplatser vi har byggt för riktiga företag</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div className="border-2 border-white overflow-hidden group cursor-pointer">
               <div className="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop" alt="Pizza" className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop" alt="Pizza" className="w-full h-56 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
               </div>
-              <div className="p-8 bg-white text-black">
+              <div className="p-6 sm:p-8 bg-white text-black">
                 <p className="text-sm text-gray-600 mb-2">Restaurang</p>
-                <h3 className="text-3xl font-bold mb-3">Bella's Pizzeria</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">Bella's Pizzeria</h3>
                 <p className="text-gray-700">Onlinebeställningsplattform med realtidshantering av meny</p>
               </div>
             </div>
 
             <div className="border-2 border-white overflow-hidden group cursor-pointer">
               <div className="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&h=600&fit=crop" alt="Nails" className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&h=600&fit=crop" alt="Nails" className="w-full h-56 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
               </div>
-              <div className="p-8 bg-white text-black">
+              <div className="p-6 sm:p-8 bg-white text-black">
                 <p className="text-sm text-gray-600 mb-2">Bokning</p>
-                <h3 className="text-3xl font-bold mb-3">Luxe Nails Studio</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">Luxe Nails Studio</h3>
                 <p className="text-gray-700">Bokningssystem med kundhantering</p>
               </div>
             </div>
 
             <div className="border-2 border-white overflow-hidden group cursor-pointer">
               <div className="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop" alt="Fitness" className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop" alt="Fitness" className="w-full h-56 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
               </div>
-              <div className="p-8 bg-white text-black">
+              <div className="p-6 sm:p-8 bg-white text-black">
                 <p className="text-sm text-gray-600 mb-2">Bokning</p>
-                <h3 className="text-3xl font-bold mb-3">Urban Fitness</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">Urban Fitness</h3>
                 <p className="text-gray-700">Medlemskapsplattform med klassbokning</p>
               </div>
             </div>
 
             <div className="border-2 border-white overflow-hidden group cursor-pointer">
               <div className="overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop" alt="Café" className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop" alt="Café" className="w-full h-56 sm:h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
               </div>
-              <div className="p-8 bg-white text-black">
+              <div className="p-6 sm:p-8 bg-white text-black">
                 <p className="text-sm text-gray-600 mb-2">Restaurang</p>
-                <h3 className="text-3xl font-bold mb-3">Green Leaf Café</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">Green Leaf Café</h3>
                 <p className="text-gray-700">Modern webbplats med online beställning</p>
               </div>
             </div>
@@ -185,58 +214,60 @@ export default function WebLurLanding() {
         </div>
       </section>
 
-      <section id="process" className="bg-white py-24 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4">Hur Vi Arbetar</h2>
-            <p className="text-lg text-gray-600">Vår strömlinjeformade process får dig online snabbt</p>
+      {/* PROCESS */}
+      <section id="process" className="bg-white py-16 sm:py-24 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4">Hur Vi Arbetar</h2>
+            <p className="text-base sm:text-lg text-gray-600">Vår strömlinjeformade process får dig online snabbt</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-7xl font-bold text-gray-200 mb-4">01</div>
-              <h3 className="text-2xl font-bold mb-3">Upptäcktsamtal</h3>
+              <div className="text-6xl sm:text-7xl font-bold text-gray-200 mb-3 sm:mb-4">01</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Upptäcktsamtal</h3>
               <p className="text-gray-600">Vi börjar med att förstå ditt företag, dina mål och din vision för din onlinenärvaro.</p>
             </div>
 
             <div className="text-center">
-              <div className="text-7xl font-bold text-gray-200 mb-4">02</div>
-              <h3 className="text-2xl font-bold mb-3">Design & Planering</h3>
+              <div className="text-6xl sm:text-7xl font-bold text-gray-200 mb-3 sm:mb-4">02</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Design & Planering</h3>
               <p className="text-gray-600">Vårt team skapar en anpassad design skräddarsydd för ditt varumärke och målgrupp.</p>
             </div>
 
             <div className="text-center">
-              <div className="text-7xl font-bold text-gray-200 mb-4">03</div>
-              <h3 className="text-2xl font-bold mb-3">Utveckling</h3>
+              <div className="text-6xl sm:text-7xl font-bold text-gray-200 mb-3 sm:mb-4">03</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Utveckling</h3>
               <p className="text-gray-600">Vi bygger din webbplats med ren kod, snabb prestanda och enkel hantering.</p>
             </div>
 
             <div className="text-center">
-              <div className="text-7xl font-bold text-gray-200 mb-4">04</div>
-              <h3 className="text-2xl font-bold mb-3">Lansering & Support</h3>
+              <div className="text-6xl sm:text-7xl font-bold text-gray-200 mb-3 sm:mb-4">04</div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">Lansering & Support</h3>
               <p className="text-gray-600">Vi lanserar din webbplats och tillhandahåller kontinuerlig support för att säkerställa att allt fungerar smidigt.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="priser" className="bg-black text-white py-24 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4">Priser</h2>
-            <p className="text-lg text-gray-400">Transparenta priser utan dolda avgifter. Startavgift + månatlig hosting & underhåll.</p>
+      {/* PRISER */}
+      <section id="priser" className="bg-black text-white py-16 sm:py-24 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4">Priser</h2>
+            <p className="text-base sm:text-lg text-gray-400">Transparenta priser utan dolda avgifter. Startavgift + månatlig hosting & underhåll.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="border-2 border-white p-8 hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer flex flex-col">
-              <h3 className="text-3xl font-bold mb-2">Starter</h3>
-              <div className="text-5xl font-bold mb-2">3 990 kr</div>
-              <p className="text-sm mb-6 text-gray-400 group-hover:text-gray-600">Startavgift</p>
-              <div className="text-3xl font-bold mb-2">750 kr/mån</div>
-              <p className="text-sm mb-6 text-gray-400 group-hover:text-gray-600">Hosting & underhåll</p>
-              <p className="mb-8 text-gray-300 group-hover:text-gray-700">Perfekt för små företag som vill komma igång online</p>
-              
-              <ul className="space-y-3 mb-8 flex-grow">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="border-2 border-white p-6 sm:p-8 hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer flex flex-col">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-2">Starter</h3>
+              <div className="text-4xl sm:text-5xl font-bold mb-2">3 990 kr</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-400 group-hover:text-gray-600">Startavgift</p>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">750 kr/mån</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-400 group-hover:text-gray-600">Hosting & underhåll</p>
+              <p className="mb-6 sm:mb-8 text-gray-300 group-hover:text-gray-700">Perfekt för små företag som vill komma igång online</p>
+
+              <ul className="space-y-3 mb-6 sm:mb-8 flex-grow">
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>5-sidors anpassad webbplats</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Mobilanpassad design</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Kontaktformulär</span></li>
@@ -244,20 +275,20 @@ export default function WebLurLanding() {
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Hosting & säkerhetskopiering</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Månatlig underhåll & uppdateringar</span></li>
               </ul>
-              
+
               <button onClick={() => scrollToSection('kontakt')} className="w-full bg-white text-black py-3 font-bold hover:bg-black hover:text-white border-2 border-white transition-all duration-300 group-hover:bg-black group-hover:text-white mt-auto">Kom Igång</button>
             </div>
 
-            <div className="bg-white text-black p-8 border-2 border-white hover:scale-105 transition-all duration-300 cursor-pointer relative flex flex-col">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-1 text-sm font-bold border-2 border-white">MEST POPULÄR</div>
-              <h3 className="text-3xl font-bold mb-2 mt-4">Professional</h3>
-              <div className="text-5xl font-bold mb-2">7 990 kr</div>
-              <p className="text-sm mb-6 text-gray-600">Startavgift</p>
-              <div className="text-3xl font-bold mb-2">1 290 kr/mån</div>
-              <p className="text-sm mb-6 text-gray-600">Hosting & underhåll</p>
-              <p className="mb-8 text-gray-700">Idealisk för restauranger och bokningstjänster</p>
-              
-              <ul className="space-y-3 mb-8 flex-grow">
+            <div className="bg-white text-black p-6 sm:p-8 border-2 border-white hover:scale-105 transition-all duration-300 cursor-pointer relative flex flex-col">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-1 text-sm font-bold border-2 border-white whitespace-nowrap">MEST POPULÄR</div>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-2 mt-4">Professional</h3>
+              <div className="text-4xl sm:text-5xl font-bold mb-2">7 990 kr</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-600">Startavgift</p>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">1 290 kr/mån</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-600">Hosting & underhåll</p>
+              <p className="mb-6 sm:mb-8 text-gray-700">Idealisk för restauranger och bokningstjänster</p>
+
+              <ul className="space-y-3 mb-6 sm:mb-8 flex-grow">
                 <li className="flex items-start gap-2"><span className="text-black mt-1">✓</span><span>10-sidors anpassad webbplats</span></li>
                 <li className="flex items-start gap-2"><span className="text-black mt-1">✓</span><span>Onlinebeställning eller bokningssystem</span></li>
                 <li className="flex items-start gap-2"><span className="text-black mt-1">✓</span><span>Mobilanpassad design</span></li>
@@ -267,19 +298,19 @@ export default function WebLurLanding() {
                 <li className="flex items-start gap-2"><span className="text-black mt-1">✓</span><span>Prioriterad support</span></li>
                 <li className="flex items-start gap-2"><span className="text-black mt-1">✓</span><span>Månatliga prestationsrapporter</span></li>
               </ul>
-              
+
               <button onClick={() => scrollToSection('kontakt')} className="w-full bg-black text-white py-3 font-bold border-2 border-black transition-all duration-300 mt-auto">Kom Igång</button>
             </div>
 
-            <div className="border-2 border-white p-8 hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer flex flex-col">
-              <h3 className="text-3xl font-bold mb-2">Enterprise</h3>
-              <div className="text-5xl font-bold mb-2">10 990 kr</div>
-              <p className="text-sm mb-6 text-gray-400 group-hover:text-gray-600">Startavgift</p>
-              <div className="text-3xl font-bold mb-2">2 490 kr/mån</div>
-              <p className="text-sm mb-6 text-gray-400 group-hover:text-gray-600">Hosting & underhåll</p>
-              <p className="mb-8 text-gray-300 group-hover:text-gray-700">Skräddarsydda lösningar för komplexa affärsbehov</p>
-              
-              <ul className="space-y-3 mb-8 flex-grow">
+            <div className="border-2 border-white p-6 sm:p-8 hover:bg-white hover:text-black transition-all duration-300 group cursor-pointer flex flex-col">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-2">Enterprise</h3>
+              <div className="text-4xl sm:text-5xl font-bold mb-2">10 990 kr</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-400 group-hover:text-gray-600">Startavgift</p>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">2 490 kr/mån</div>
+              <p className="text-sm mb-4 sm:mb-6 text-gray-400 group-hover:text-gray-600">Hosting & underhåll</p>
+              <p className="mb-6 sm:mb-8 text-gray-300 group-hover:text-gray-700">Skräddarsydda lösningar för komplexa affärsbehov</p>
+
+              <ul className="space-y-3 mb-6 sm:mb-8 flex-grow">
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Obegränsat antal sidor</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Anpassade integrationer</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>E-handelsplattform</span></li>
@@ -289,22 +320,23 @@ export default function WebLurLanding() {
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Månatlig optimering & support</span></li>
                 <li className="flex items-start gap-2"><span className="mt-1 group-hover:text-black">✓</span><span>Anpassade funktioner</span></li>
               </ul>
-              
+
               <button onClick={() => scrollToSection('kontakt')} className="w-full bg-white text-black py-3 font-bold hover:bg-black hover:text-white border-2 border-white transition-all duration-300 group-hover:bg-black group-hover:text-white mt-auto">Kom Igång</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="kontakt" className="bg-black text-white py-24 scroll-mt-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold mb-4">Låt Oss Prata</h2>
-            <p className="text-lg text-gray-400">Redo att få ditt företag online? Fyll i formuläret nedan så återkommer vi inom 24 timmar.</p>
+      {/* KONTAKT */}
+      <section id="kontakt" className="bg-black text-white py-16 sm:py-24 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-4">Låt Oss Prata</h2>
+            <p className="text-base sm:text-lg text-gray-400">Redo att få ditt företag online? Fyll i formuläret nedan så återkommer vi inom 24 timmar.</p>
           </div>
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-5 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Fullständigt Namn *</label>
                 <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Johan Andersson" className="w-full px-4 py-3 bg-white text-black border-2 border-white focus:outline-none focus:ring-2 focus:ring-white" />
@@ -315,7 +347,7 @@ export default function WebLurLanding() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Telefonnummer</label>
                 <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="+46 70 123 45 67" className="w-full px-4 py-3 bg-white text-black border-2 border-white focus:outline-none focus:ring-2 focus:ring-white" />
@@ -336,9 +368,10 @@ export default function WebLurLanding() {
         </div>
       </section>
 
-      <footer className="bg-white py-12 border-t-2 border-black">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* FOOTER */}
+      <footer className="bg-white py-10 sm:py-12 border-t-2 border-black">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                 <span className="text-2xl">⛶</span>
@@ -368,7 +401,7 @@ export default function WebLurLanding() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 px-8">
+        <div className="mt-8 pt-8 px-6 sm:px-8">
           <div className="border-t-2 border-black pt-8">
             <div className="max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row justify-between items-center gap-4">
